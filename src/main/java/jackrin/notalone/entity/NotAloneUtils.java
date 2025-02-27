@@ -40,7 +40,7 @@ public class NotAloneUtils {
     private static final int SPAWN_CHANCE = 100;
     private static Optional<ServerPlayerEntity> markedPlayer = Optional.empty();
     private static long markEndTime = 0L;
-    private static final long MARK_DURATION_TICKS = 20L * 60 * 5;
+    private static final long MARK_DURATION_TICKS = 20L * 60 * 20;
 
     private static boolean hasClearLineOfSight(World world, Vec3d start, Vec3d end, PlayerEntity player) {
         Set<Block> ignoredBlocks = Set.of(

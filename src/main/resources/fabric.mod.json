@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "notalone",
+	"version": "${version}",
+	"name": "Not Alone",
+	"description": "I had recently spawned a new world in a single-player Minecraft...",
+	"authors": [
+		"Jackrin"
+	],
+	"contact": {
+		"homepage": "https://github.com/Jackrin/NotAlone",
+		"issues": "https://github.com/Jackrin/NotAlone/issues",
+		"sources": "https://github.com/Jackrin/NotAlone"
+	},
+	"license": "MIT",
+	"icon": "assets/notalone/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"jackrin.notalone.NotAlone"
+		],
+		"client": [
+			"jackrin.notalone.NotAloneClient"
+		]
+	},
+	"mixins": [
+		"notalone.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "jackrin.notalone.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [],
+	"client": [
+		"EntityRenderMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

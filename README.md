@@ -2,7 +2,9 @@
 
 A Minecraft Mod that adds a subtle Herobrine to the game.
 
-The mod is designed to be installed and forgotten about, as it's intent is to player question if what they saw was actually there or if they imagined it.
+The mod is designed to be installed and forgotten about, as it's intent is to make the player question if what they saw was actually there or if they imagined it.
+
+Currently has this main feature, but it will have more in the future that will follow the same concept.
 
 ## Multiplayer
 

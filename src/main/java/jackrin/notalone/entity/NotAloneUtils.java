@@ -317,8 +317,6 @@ public class NotAloneUtils {
         ServerPlayerEntity newMarkedPlayer = players.get(overworld.getRandom().nextInt(players.size()));
         markedPlayer = Optional.of(newMarkedPlayer);
         markEndTime = overworld.getTime() + MARK_DURATION_TICKS;
-
-        newMarkedPlayer.sendMessage(
     }
 
     public static void checkMarkExpiration(MinecraftServer server) {

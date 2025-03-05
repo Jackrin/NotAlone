@@ -319,8 +319,6 @@ public class NotAloneUtils {
         markEndTime = overworld.getTime() + MARK_DURATION_TICKS;
 
         newMarkedPlayer.sendMessage(
-                Text.literal("You feel a strange presence watching you...").formatted(Formatting.RED), false);
-        System.out.println("New marked player: " + newMarkedPlayer.getName().getString());
     }
 
     public static void checkMarkExpiration(MinecraftServer server) {

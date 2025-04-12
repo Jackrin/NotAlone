@@ -1,0 +1,40 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "homepage": "https://modrinth.com/mod/notalone",
+        "sources": "https://github.com/Jackrin/NotAlone"
+    },
+    "license": "${license}",
+    "icon": "${mod_id}.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "jackrin.notalone.NotAloneFabric"
+        ],
+        "client": [
+            "jackrin.notalone.client.NotAloneFabricClient"
+        ]
+    },
+    "mixins": [
+        "${mod_id}.mixins.json",
+        "${mod_id}.fabric.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": "*",
+        "minecraft": "${minecraft_version}",
+        "java": ">=${java_version}",
+        "commonnetworking": ">=1.0.16"
+    },
+    "suggests": {
+        "another-mod": "*"
+    }
+}
+  

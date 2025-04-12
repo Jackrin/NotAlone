@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 
 
 public class EntityRotationSyncPayload {
@@ -54,7 +55,7 @@ public class EntityRotationSyncPayload {
             client.execute(() -> {
                 if (client.level == null) return;
                 Entity entity = client.level.getEntity(ctx.message().entityId);
-                if (entity instanceof NotAloneEntity myEntity) {
+                if (entity instanceof Entity myEntity) {
                     myEntity.setYRot(ctx.message().yaw);
                     myEntity.setXRot(ctx.message().pitch);
                     myEntity.setYBodyRot(ctx.message().bodyYaw);

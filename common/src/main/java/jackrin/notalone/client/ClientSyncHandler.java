@@ -5,8 +5,8 @@ import jackrin.notalone.network.SyncFovPayload;
 import net.minecraft.client.Minecraft;
 
 public class ClientSyncHandler {
-    private static double lastSentFov = 0;
-    private static double lastSentAspectRatio = 0;
+    public static double lastSentFov = 0;
+    public static double lastSentAspectRatio = 0;
 
     public static void tickClient(Minecraft client) {
         if (client.player != null) {

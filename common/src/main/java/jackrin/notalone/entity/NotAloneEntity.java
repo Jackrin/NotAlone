@@ -21,9 +21,7 @@ import net.minecraft.world.level.Level;
 public class NotAloneEntity extends PathfinderMob {
     private int timeSeen = 0;
     private int timeExisted = 0;
-    private static final int MAX_SEEN_TIME_NEAR = 2;
-    private static final int MAX_SEEN_TIME_FAR = 10;
-    private static final double INSTANT_DISAPPEAR_CONE = 60.0;
+    private static final double INSTANT_DISAPPEAR_CONE = 70.0;
     private static final int MAX_EXISTENCE_TIME = 3000;
     public boolean seen = false;
 
@@ -31,6 +29,22 @@ public class NotAloneEntity extends PathfinderMob {
         super(entityType, world);
         this.setPersistenceRequired();
         this.setInvulnerable(true);
+    }
+
+    private int getMaxSeenTime(double distance) {
+        final int minSeenTime = 2;
+        final int maxSeenTime = 20;
+        final double minDistance = 24.0;
+        final double maxDistance = 96.0;
+
+        if (distance <= minDistance) {
+            return minSeenTime;
+        } else if (distance >= maxDistance) {
+            return maxSeenTime;
+        } else {
+            double factor = (distance - minDistance) / (maxDistance - minDistance);
+            return minSeenTime + (int)Math.round(factor * (maxSeenTime - minSeenTime));
+        }
     }
 
     private void syncRotation() {
@@ -72,9 +86,7 @@ public class NotAloneEntity extends PathfinderMob {
                         return;
                     }
 
-
-                    int maxSeenTime = distance < 64 ? MAX_SEEN_TIME_NEAR : MAX_SEEN_TIME_FAR;
-
+                    int maxSeenTime = getMaxSeenTime(distance);
                     timeSeen++;
                     if (timeSeen >= maxSeenTime) {
                         this.remove(RemovalReason.DISCARDED);
@@ -99,7 +111,7 @@ public class NotAloneEntity extends PathfinderMob {
                         this.seen = true;
                         return;
                     }
-                    int maxSeenTime = distance < 64 ? MAX_SEEN_TIME_NEAR : MAX_SEEN_TIME_FAR;
+                    int maxSeenTime = getMaxSeenTime(distance);
                     timeSeen++;
                     if (timeSeen >= maxSeenTime) {
                         this.seen = true;

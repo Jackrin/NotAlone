@@ -1,18 +1,17 @@
 package jackrin.notalone.utils;
 
 import java.awt.*;
+import java.awt.desktop.SystemEventListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
-
 import jackrin.notalone.entity.NotAloneEntity;
 import jackrin.notalone.init.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,7 +33,9 @@ public class NotAloneUtils {
     public static final Map<UUID, Double> playerAspectRatioMap = new ConcurrentHashMap<>();
     private static final RandomSource RANDOM = RandomSource.create();
     private static final int SPAWN_CHANCE = 2000;
-    private static ServerPlayer markedPlayer = null;
+    private static final int FOOTSTEPS_CHANCE = 4000;
+    private static final int WHITE_EYES_CHANCE = 2000;
+    public static ServerPlayer markedPlayer = null;
     private static long markEndTime = 0L;
     private static final long MARK_DURATION_TICKS = 20L * 60 * 20;
 
@@ -49,11 +50,13 @@ public class NotAloneUtils {
             Blocks.OAK_DOOR, Blocks.SPRUCE_DOOR, Blocks.BIRCH_DOOR, Blocks.JUNGLE_DOOR, Blocks.ACACIA_DOOR,
             Blocks.DARK_OAK_DOOR,
             Blocks.LADDER, Blocks.VINE, Blocks.TALL_GRASS, Blocks.FERN, Blocks.FLOWER_POT,
-            Blocks.WATER, Blocks.LAVA);
+            Blocks.WATER, Blocks.LAVA
+    );
 
     static Set<Block> leavesBlocks = Set.of(
             Blocks.OAK_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.BIRCH_LEAVES, Blocks.JUNGLE_LEAVES,
-            Blocks.ACACIA_LEAVES, Blocks.DARK_OAK_LEAVES);
+            Blocks.ACACIA_LEAVES, Blocks.DARK_OAK_LEAVES
+    );
 
     private static boolean hasClearLineOfSight(Level level, Vec3 start, Vec3 end, Player player, double stepSize) {
         Vec3 current = start;
@@ -149,8 +152,7 @@ public class NotAloneUtils {
         return biomeEntry.is(BiomeTags.IS_FOREST);
     }
 
-    private static BlockPos findValidSpawnPosition(ServerLevel level, ServerPlayer targetPlayer,
-                                                   List<ServerPlayer> allPlayers) {
+    private static BlockPos findValidSpawnPosition(ServerLevel level, ServerPlayer targetPlayer, List<ServerPlayer> allPlayers) {
         int MIN_DISTANCE = 48;
         int MIN_DISTANCE_FOREST = 24;
         int MAX_DISTANCE = 96;
@@ -210,10 +212,12 @@ public class NotAloneUtils {
         return !level.getEntities(ModEntities.ENTITY, entity -> true).isEmpty();
     }
 
-    public static void trySpawnEntity(ServerLevel level) {
+    public static void trySpawnEntity() {
         if (markedPlayer == null) {
             return;
         }
+
+        ServerLevel level = markedPlayer.serverLevel();
 
         if (isEntityAlreadyPresent(level)) {
             return;
@@ -221,6 +225,31 @@ public class NotAloneUtils {
 
         if (RANDOM.nextInt(SPAWN_CHANCE) == 0) {
             spawnEntity(level, markedPlayer);
+        }
+    }
+
+    public static void tryPlayFootsteps() {
+        if (markedPlayer == null) {
+            return;
+        }
+
+        if (RANDOM.nextInt(FOOTSTEPS_CHANCE) == 0) {
+            FootstepEffects.tryPlayFootsteps(markedPlayer);
+        }
+    }
+
+    public static void tryWhiteEyesAnimal(MinecraftServer server) {
+        ServerLevel overworld = server.overworld();
+        if (markedPlayer == null || overworld.getGameTime() >= WhiteEyesAnimal.endTime) {
+            if (WhiteEyesAnimal.animal_uuid != null) {
+                WhiteEyesAnimal.animal_uuid = null;
+                WhiteEyesAnimal.stareGoalSet = false;
+            }
+            return;
+        }
+        if (RANDOM.nextInt(WHITE_EYES_CHANCE) == 0) {
+            if (WhiteEyesAnimal.animal_uuid != null) return;
+            WhiteEyesAnimal.triggerWhiteEyedAnimalEffect(markedPlayer);
         }
     }
 
@@ -233,7 +262,6 @@ public class NotAloneUtils {
         }
 
         ServerLevel overworld = server.overworld();
-
         markedPlayer = players.get(overworld.getRandom().nextInt(players.size()));
         markEndTime = overworld.getGameTime() + MARK_DURATION_TICKS;
     }
@@ -263,7 +291,4 @@ public class NotAloneUtils {
         }
     }
 
-    public static void updatePlayerFOV(UUID playerUUID, double fov) {
-        playerFovMap.put(playerUUID, fov);
-    }
 }

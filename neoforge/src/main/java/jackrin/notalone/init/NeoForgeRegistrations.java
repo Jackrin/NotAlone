@@ -7,6 +7,7 @@ import jackrin.notalone.client.model.EntityModel;
 import jackrin.notalone.client.renderer.EntityRenderer;
 import jackrin.notalone.entity.NotAloneEntity;
 import jackrin.notalone.utils.NotAloneUtils;
+import jackrin.notalone.utils.TickTaskScheduler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -56,11 +57,6 @@ public class NeoForgeRegistrations {
     public static class GameEvents {
         @SubscribeEvent
         public static void onWorldTick(LevelTickEvent.Post  event) {
-            if (!event.getLevel().isClientSide()) {
-                if (event.getLevel() instanceof ServerLevel serverLevel) {
-                    NotAloneUtils.trySpawnEntity(serverLevel);
-                }
-            }
         }
 
         @SubscribeEvent
@@ -68,6 +64,9 @@ public class NeoForgeRegistrations {
             MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
             if (server == null) return;
             NotAloneUtils.checkMarkExpiration(server);
+            NotAloneUtils.trySpawnEntity();
+            NotAloneUtils.tryPlayFootsteps();
+            TickTaskScheduler.tick();
         }
     }
 

@@ -3,6 +3,7 @@ package jackrin.notalone.init;
 import jackrin.notalone.NotAlone;
 import jackrin.notalone.entity.NotAloneEntity;
 import jackrin.notalone.utils.NotAloneUtils;
+import jackrin.notalone.utils.TickTaskScheduler;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
@@ -25,7 +26,11 @@ public class FabricRegistrations {
                 NotAloneEntity.createMobAttributes()
         );
 
-        ServerTickEvents.END_WORLD_TICK.register(NotAloneUtils::trySpawnEntity);
         ServerTickEvents.END_SERVER_TICK.register(NotAloneUtils::checkMarkExpiration);
+        ServerTickEvents.END_SERVER_TICK.register(server -> NotAloneUtils.trySpawnEntity());
+        ServerTickEvents.END_SERVER_TICK.register(server -> NotAloneUtils.tryPlayFootsteps());
+        ServerTickEvents.END_SERVER_TICK.register(server -> TickTaskScheduler.tick());
+        ServerTickEvents.END_SERVER_TICK.register(server -> NotAloneUtils.tryWhiteEyesAnimal(server));
+
     }
 }

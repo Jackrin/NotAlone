@@ -240,7 +240,7 @@ public class NotAloneUtils {
 
     public static void tryWhiteEyesAnimal(MinecraftServer server) {
         ServerLevel overworld = server.overworld();
-        if (markedPlayer == null || overworld.getGameTime() >= WhiteEyesAnimal.endTime) {
+        if (markedPlayer == null || (overworld.getGameTime() >= WhiteEyesAnimal.endTime && WhiteEyesAnimal.animal_uuid != null)) {
             if (WhiteEyesAnimal.animal_uuid != null) {
                 WhiteEyesAnimal.animal_uuid = null;
                 WhiteEyesAnimal.stareGoalSet = false;
@@ -272,12 +272,16 @@ public class NotAloneUtils {
         List<ServerPlayer> players = server.getPlayerList().getPlayers();
 
         if (markedPlayer == null) {
+            WhiteEyesAnimal.animal_uuid = null;
+            WhiteEyesAnimal.stareGoalSet = false;
             chooseNewMarkedPlayer(server);
             return;
         }
 
         if (overworld.getGameTime() >= markEndTime) {
             markedPlayer = null;
+            WhiteEyesAnimal.animal_uuid = null;
+            WhiteEyesAnimal.stareGoalSet = false;
             chooseNewMarkedPlayer(server);
             return;
         }

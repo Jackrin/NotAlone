@@ -66,8 +66,8 @@ public class NeoForgeRegistrations {
             NotAloneUtils.checkMarkExpiration(server);
             NotAloneUtils.trySpawnEntity();
             NotAloneUtils.tryPlayFootsteps();
-            NotAloneUtils.tryWhiteEyesAnimal(server);
             TickTaskScheduler.tick();
+            NotAloneUtils.tryWhiteEyesAnimal(server);
         }
     }
 

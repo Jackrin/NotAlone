@@ -4,7 +4,10 @@ A Minecraft Mod that adds a subtle Herobrine to the game.
 
 The mod is designed to be installed and forgotten about, as it's intent is to make the player question if what they saw was actually there or if they imagined it.
 
-Currently has this main feature, but it will have more in the future that will follow the same concept.
+Features so far:
+- Herobrine (can appear and stalk the player, disappears when in Player's FOV)
+- Animal possession (Herobrine can possess animals around you, they will get white eyes and stalk you, until looked at)
+- Footsteps (Footsteps can play at random times behind the player)
 
 ## Multiplayer
 

@@ -45,7 +45,7 @@ public class WhiteEyesLayer extends  RenderLayer<LivingEntityRenderState, Entity
                        LivingEntityRenderState state,
                        float yRot,
                        float xRot) {
-        //if(state instanceof WhiteEyesRenderState abs) {
+        if(state instanceof WhiteEyesRenderState abs) {
             if (WhiteEyesAnimalClient.animal_uuid != ((WhiteEyesRenderState) state).getEntity().getUUID()) return;
             Minecraft client = Minecraft.getInstance();
             if (client.options.getCameraType() == CameraType.THIRD_PERSON_BACK ||
@@ -70,7 +70,7 @@ public class WhiteEyesLayer extends  RenderLayer<LivingEntityRenderState, Entity
                     0,
                     null
             );
-        //}
+        }
     }
 }
 

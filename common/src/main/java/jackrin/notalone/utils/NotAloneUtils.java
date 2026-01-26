@@ -1,7 +1,6 @@
 package jackrin.notalone.utils;
 
 import java.awt.*;
-import java.awt.desktop.SystemEventListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,9 +31,9 @@ public class NotAloneUtils {
     public static final Map<UUID, Double> playerFovMap = new ConcurrentHashMap<>();
     public static final Map<UUID, Double> playerAspectRatioMap = new ConcurrentHashMap<>();
     private static final RandomSource RANDOM = RandomSource.create();
-    private static final int SPAWN_CHANCE = 2000;
+    private static final int SPAWN_CHANCE = 50;
     private static final int FOOTSTEPS_CHANCE = 4000;
-    private static final int WHITE_EYES_CHANCE = 2000;
+    private static final int WHITE_EYES_CHANCE = 50;
     public static ServerPlayer markedPlayer = null;
     private static long markEndTime = 0L;
     private static final long MARK_DURATION_TICKS = 20L * 60 * 20;
@@ -203,7 +202,8 @@ public class NotAloneUtils {
 
         if (spawnPos != null) {
             NotAloneEntity entity = new NotAloneEntity(ModEntities.ENTITY, level);
-            entity.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), 0, 0);
+            Vec3 vec = new Vec3(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+            entity.moveOrInterpolateTo(vec, 0, 0);
             level.addFreshEntity(entity);
         }
     }
@@ -217,7 +217,7 @@ public class NotAloneUtils {
             return;
         }
 
-        ServerLevel level = markedPlayer.serverLevel();
+        ServerLevel level = markedPlayer.level();
 
         if (isEntityAlreadyPresent(level)) {
             return;

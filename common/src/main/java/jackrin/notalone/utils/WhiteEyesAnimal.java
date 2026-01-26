@@ -9,9 +9,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.cow.Cow;
+import net.minecraft.world.entity.animal.pig.Pig;
+import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.phys.AABB;
 
 import java.util.*;
@@ -29,7 +29,7 @@ public class WhiteEyesAnimal {
 
     public static void triggerWhiteEyedAnimalEffect(ServerPlayer player) {
         @SuppressWarnings("resource")
-        ServerLevel level = player.serverLevel();
+        ServerLevel level = player.level();
         double radius = 64;
 
         AABB box = player.getBoundingBox().inflate(radius);
@@ -44,7 +44,7 @@ public class WhiteEyesAnimal {
         if (animals.isEmpty()) return;
 
         Animal chosen = animals.get(level.getRandom().nextInt(animals.size()));
-        ServerLevel overworld = chosen.getServer().overworld();
+        ServerLevel overworld = chosen.level().getServer().overworld();
         animal_uuid = chosen.getUUID();
         endTime = overworld.getGameTime() + MARK_DURATION_TICKS;
         WhiteEyesSyncPayload payload = new WhiteEyesSyncPayload(chosen.getId(), true);
@@ -52,7 +52,7 @@ public class WhiteEyesAnimal {
     }
 
     public static void tick(Animal animal) {
-        if (animal.level().isClientSide) {
+        if (animal.level().isClientSide()) {
             WhiteEyesAnimalClient.tick(animal);
         } else {
 

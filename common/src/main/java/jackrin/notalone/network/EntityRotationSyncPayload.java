@@ -2,15 +2,13 @@ package jackrin.notalone.network;
 
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
-import jackrin.notalone.entity.NotAloneEntity;
 import net.minecraft.client.Minecraft;
 import jackrin.notalone.NotAlone;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
 
 
 public class EntityRotationSyncPayload {
@@ -19,7 +17,7 @@ public class EntityRotationSyncPayload {
     private final float pitch;
     private final float bodyYaw;
 
-    public static final ResourceLocation CHANNEL = NotAlone.id("entity_rotation_sync");
+    public static final Identifier CHANNEL = NotAlone.id("entity_rotation_sync");
     public static final StreamCodec<FriendlyByteBuf, EntityRotationSyncPayload> STREAM_CODEC = StreamCodec.ofMember(EntityRotationSyncPayload::encode, EntityRotationSyncPayload::new);
 
     public EntityRotationSyncPayload(int entityId, float yaw, float pitch, float bodyYaw) {

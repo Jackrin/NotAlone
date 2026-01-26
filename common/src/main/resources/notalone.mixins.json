@@ -11,7 +11,9 @@
   "client": [
     "EntityRenderMixin",
     "MobRendererMixin",
-    "LivingEntityRendererAccessor"
+    "LivingEntityRendererAccessor",
+    "LivingEntityRendererMixin",
+    "LivingEntityRenderStateMixin"
   ],
   "server": [],
   "injectors": {

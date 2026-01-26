@@ -60,3 +60,7 @@ sourceSets.configureEach {
         }
     }
 }
+
+dependencies {
+    implementation "mysticdrew:common-networking-neoforge:1.0.22-1.21.11"
+}

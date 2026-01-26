@@ -7,14 +7,14 @@ import jackrin.notalone.utils.NotAloneUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 public class SyncFovPayload {
     private final double fov;
     private final double aspectRatio;
 
-    public static final ResourceLocation CHANNEL = NotAlone.id("sync_fov");
+    public static final Identifier CHANNEL = NotAlone.id("sync_fov");
     public static final StreamCodec<FriendlyByteBuf, SyncFovPayload> STREAM_CODEC = StreamCodec.ofMember(SyncFovPayload::encode, SyncFovPayload::new);
 
     public SyncFovPayload(double fov, double aspectRatio) {

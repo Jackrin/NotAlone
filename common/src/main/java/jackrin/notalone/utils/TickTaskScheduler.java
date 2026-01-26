@@ -1,6 +1,5 @@
 package jackrin.notalone.utils;
 
-import net.minecraft.server.MinecraftServer;
 
 import java.util.LinkedList;
 import java.util.Queue;

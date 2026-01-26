@@ -2,6 +2,8 @@ package jackrin.notalone.network;
 
 import commonnetwork.api.Network;
 
+import java.util.logging.Logger;
+
 public class PayloadRegistrations {
     public void init() {
         Network

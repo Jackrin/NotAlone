@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 
@@ -19,7 +21,10 @@ public class FabricRegistrations {
                 NotAlone.id("notalone_entity"),
                 EntityType.Builder.of(NotAloneEntity::new, MobCategory.MISC)
                         .sized(0.6F, 1.8F)
-                        .build("notalone_entity")
+                        .build(ResourceKey.create(
+                                Registries.ENTITY_TYPE,
+                                NotAlone.id("notalone_entity")
+                        ))
         );
         FabricDefaultAttributeRegistry.register(
                 ModEntities.ENTITY,

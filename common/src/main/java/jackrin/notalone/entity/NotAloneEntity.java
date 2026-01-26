@@ -6,7 +6,6 @@ import jackrin.notalone.network.EntityRotationSyncPayload;
 import jackrin.notalone.utils.NotAloneUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.PathfinderMob;
@@ -16,6 +15,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
+import java.util.logging.Logger;
 
 @SuppressWarnings("resource")
 public class NotAloneEntity extends PathfinderMob {
@@ -65,12 +65,12 @@ public class NotAloneEntity extends PathfinderMob {
         timeExisted++;
         if (timeExisted >= MAX_EXISTENCE_TIME) {
             this.seen = true;
-            if (!this.level().isClientSide) {
+            if (!this.level().isClientSide()) {
                 this.remove(RemovalReason.DISCARDED);
             }
             return;
         }
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             for (Player player : this.level().players()) {
                 double distance = this.distanceTo(player);
 
@@ -98,7 +98,7 @@ public class NotAloneEntity extends PathfinderMob {
             }
         }
 
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             Player clientPlayer = ClientUtils.getClientPlayer();
             if (clientPlayer != null) {
                 double distance = this.distanceTo(clientPlayer);
@@ -123,7 +123,7 @@ public class NotAloneEntity extends PathfinderMob {
             }
         }
 
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             return;
         }
 
@@ -167,8 +167,8 @@ public class NotAloneEntity extends PathfinderMob {
     }
 
     @Override
-    public void kill() {
-        if (!this.level().isClientSide) {
+    public void kill(ServerLevel serverLevel) {
+        if (!this.level().isClientSide()) {
             this.remove(RemovalReason.KILLED);
         }
     }
@@ -187,7 +187,7 @@ public class NotAloneEntity extends PathfinderMob {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
         return !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
     }
 }

@@ -3,14 +3,13 @@ package jackrin.notalone.network;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
 import jackrin.notalone.NotAlone;
-import jackrin.notalone.utils.NotAloneUtils;
 import jackrin.notalone.utils.WhiteEyesAnimal;
 import jackrin.notalone.utils.WhiteEyesAnimalClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +23,7 @@ public class WhiteEyesSyncPayload {
     private final int entityId;
     private final boolean hasWhiteEyes;
 
-    public static final ResourceLocation CHANNEL = NotAlone.id("white_eyes");
+    public static final Identifier CHANNEL = NotAlone.id("white_eyes");
     public static final StreamCodec<FriendlyByteBuf, WhiteEyesSyncPayload> STREAM_CODEC = StreamCodec.ofMember(
             WhiteEyesSyncPayload::encode, WhiteEyesSyncPayload::new
     );

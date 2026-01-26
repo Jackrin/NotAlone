@@ -1,6 +1,5 @@
 package jackrin.notalone.utils;
 
-import jackrin.notalone.utils.TickTaskScheduler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -12,7 +11,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class FootstepEffects {
     public static void tryPlayFootsteps(ServerPlayer player) {
-        ServerLevel level = player.serverLevel();
+        ServerLevel level = player.level();
 
         float yaw = player.getYRot();
         double radians = Math.toRadians(yaw);

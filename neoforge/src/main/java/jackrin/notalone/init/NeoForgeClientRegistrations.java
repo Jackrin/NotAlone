@@ -2,7 +2,7 @@ package jackrin.notalone.init;
 
 import jackrin.notalone.Constants;
 import jackrin.notalone.client.ClientSyncHandler;
-import jackrin.notalone.client.renderer.EntityRenderer;
+import jackrin.notalone.client.renderer.NotAloneEntityRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
@@ -15,7 +15,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 @Mod(Constants.MOD_ID)
 public class NeoForgeClientRegistrations {
 
-    @EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MOD_ID)
     public static class ClientGameEvents {
         @SubscribeEvent
         public static void onClientTick(ClientTickEvent.Post event) {
@@ -24,12 +24,12 @@ public class NeoForgeClientRegistrations {
         }
     }
 
-    @EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MOD_ID)
     public static class ClientEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                EntityRenderers.register(ModEntities.ENTITY, EntityRenderer::new);
+                EntityRenderers.register(ModEntities.ENTITY, NotAloneEntityRenderer::new);
             });
         }
     }

@@ -2,10 +2,9 @@ package jackrin.notalone.mixin;
 
 import jackrin.notalone.utils.WhiteEyesAnimal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Sheep;
-import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.entity.animal.pig.Pig;
+import net.minecraft.world.entity.animal.cow.Cow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

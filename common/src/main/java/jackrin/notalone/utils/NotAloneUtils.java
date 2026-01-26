@@ -31,9 +31,9 @@ public class NotAloneUtils {
     public static final Map<UUID, Double> playerFovMap = new ConcurrentHashMap<>();
     public static final Map<UUID, Double> playerAspectRatioMap = new ConcurrentHashMap<>();
     private static final RandomSource RANDOM = RandomSource.create();
-    private static final int SPAWN_CHANCE = 50;
+    private static final int SPAWN_CHANCE = 2000;
     private static final int FOOTSTEPS_CHANCE = 4000;
-    private static final int WHITE_EYES_CHANCE = 50;
+    private static final int WHITE_EYES_CHANCE = 2000;
     public static ServerPlayer markedPlayer = null;
     private static long markEndTime = 0L;
     private static final long MARK_DURATION_TICKS = 20L * 60 * 20;

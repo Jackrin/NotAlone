@@ -30,7 +30,7 @@ public class WhiteEyesLayer extends  RenderLayer<LivingEntityRenderState, Entity
     private static final Map<Class<?>, Identifier> TEXTURES = Map.of(
             Sheep.class, NotAlone.id("textures/entity/sheep/white_eyes.png"),
             Pig.class, NotAlone.id("textures/entity/pig/white_eyes.png"),
-            Cow.class, NotAlone.id("textures/entity/cow/white_eye.png"),
+            Cow.class, NotAlone.id("textures/entity/cow/white_eyes.png"),
             Chicken.class, NotAlone.id("textures/entity/chicken/white_eyes.png")
     );
 
@@ -56,8 +56,8 @@ public class WhiteEyesLayer extends  RenderLayer<LivingEntityRenderState, Entity
             Identifier texture = TEXTURES.get(((WhiteEyesRenderState) state).getEntity().getClass());
             if (texture == null) return;
 
-            RenderType renderType = RenderTypes.entityCutoutNoCull(texture);
-            int color = ARGB.colorFromFloat(1.0F, 1F, 1F, 1F);
+            RenderType renderType = RenderTypes.entityCutoutNoCullZOffset(texture, true);
+            int color = ARGB.colorFromFloat(1F, 1F, 1F, 1F);
             collector.submitModel(
                     this.getParentModel(),
                     state,

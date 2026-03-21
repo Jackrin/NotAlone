@@ -2,7 +2,7 @@ package jackrin.notalone.init;
 
 import jackrin.notalone.Constants;
 import jackrin.notalone.client.ClientSyncHandler;
-import jackrin.notalone.client.renderer.EntityRenderer;
+import jackrin.notalone.client.renderer.NotAloneEntityRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
@@ -29,7 +29,7 @@ public class NeoForgeClientRegistrations {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                EntityRenderers.register(ModEntities.ENTITY, EntityRenderer::new);
+                EntityRenderers.register(ModEntities.ENTITY, NotAloneEntityRenderer::new);
             });
         }
     }

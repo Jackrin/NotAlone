@@ -1,10 +1,8 @@
 package jackrin.notalone.client.model;
 
 import jackrin.notalone.NotAlone;
-import jackrin.notalone.entity.NotAloneEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.HierarchicalModel;
+import jackrin.notalone.client.renderer.NotAloneEntityRenderState;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.PartPose;
@@ -15,7 +13,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class EntityModel<T extends NotAloneEntity> extends HierarchicalModel<T> {
+public class NotAloneEntityModel extends EntityModel<NotAloneEntityRenderState> {
     public static final ModelLayerLocation ENTITY = new ModelLayerLocation(
             NotAlone.id("notalone_entity"), "main"
     );
@@ -23,7 +21,8 @@ public class EntityModel<T extends NotAloneEntity> extends HierarchicalModel<T> 
     private final ModelPart entity;
     private final ModelPart head;
 
-    public EntityModel(ModelPart root) {
+    public NotAloneEntityModel(ModelPart root) {
+        super(root);
         this.entity = root.getChild("entity");
         this.head = entity.getChild("head");
     }
@@ -85,9 +84,9 @@ public class EntityModel<T extends NotAloneEntity> extends HierarchicalModel<T> 
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(NotAloneEntityRenderState state) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
-        setHeadAngles(netHeadYaw, headPitch);
+        setHeadAngles(state.yRot, state.xRot);
     }
 
     private void setHeadAngles(float headYaw, float headPitch) {
@@ -96,15 +95,4 @@ public class EntityModel<T extends NotAloneEntity> extends HierarchicalModel<T> 
         this.head.yRot = headYaw * ((float) Math.PI / 180F);
         this.head.xRot = headPitch * ((float) Math.PI / 180F);
     }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        super.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, color);
-    }
-
-    @Override
-    public ModelPart root() {
-        return entity;
-    }
 }
-

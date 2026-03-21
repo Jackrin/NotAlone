@@ -203,7 +203,9 @@ public class NotAloneUtils {
 
         if (spawnPos != null) {
             NotAloneEntity entity = new NotAloneEntity(ModEntities.ENTITY, level);
-            entity.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), 0, 0);
+            float halfHeight = entity.getBbHeight() / 2.0f;
+            Vec3 vec = new Vec3(spawnPos.getX() + 0.5, spawnPos.getY() + halfHeight, spawnPos.getZ() + 0.5);
+            entity.moveOrInterpolateTo(vec, 0, 0);
             level.addFreshEntity(entity);
         }
     }

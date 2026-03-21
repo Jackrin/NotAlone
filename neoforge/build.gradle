@@ -37,3 +37,7 @@ neoForge {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+dependencies {
+    implementation "mysticdrew:common-networking-neoforge:1.0.18-1.21.5"
+}

@@ -6,7 +6,6 @@ import jackrin.notalone.network.EntityRotationSyncPayload;
 import jackrin.notalone.utils.NotAloneUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.PathfinderMob;
@@ -15,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 
 @SuppressWarnings("resource")
@@ -167,12 +167,11 @@ public class NotAloneEntity extends PathfinderMob {
     }
 
     @Override
-    public void kill() {
+    public void kill(@NotNull ServerLevel level) {
         if (!this.level().isClientSide) {
             this.remove(RemovalReason.KILLED);
         }
     }
-
 
     @Override
     public void handleEntityEvent(byte status) {
@@ -187,8 +186,9 @@ public class NotAloneEntity extends PathfinderMob {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(@NotNull ServerLevel level, DamageSource damageSource) {
         return !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
     }
+
 }
 

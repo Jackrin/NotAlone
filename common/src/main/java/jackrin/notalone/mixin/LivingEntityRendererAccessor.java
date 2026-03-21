@@ -12,4 +12,3 @@ public interface LivingEntityRendererAccessor {
     @Accessor("layers")
     List<RenderLayer<?, ?>> getLayers();
 }
-

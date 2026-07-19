@@ -8,15 +8,18 @@
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "homepage": "https://modrinth.com/mod/notalone",
+        "sources": "https://github.com/Jackrin/NotAlone"
     },
     "license": "${license}",
     "icon": "${mod_id}.png",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.example.examplemod.ExampleMod"
+            "jackrin.notalone.NotAloneFabric"
+        ],
+        "client": [
+            "jackrin.notalone.client.NotAloneFabricClient"
         ]
     },
     "mixins": [
@@ -27,10 +30,8 @@
         "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": "*",
         "minecraft": "~${minecraft_version}",
-        "java": ">=${java_version}"
-    },
-    "suggests": {
-        "another-mod": "*"
+        "java": ">=${java_version}",
+        "commonnetworking": "1.0.22-26.1"
     }
 }
   

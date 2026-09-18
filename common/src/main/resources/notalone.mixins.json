@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "jackrin.notalone.mixin",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_18",
+  "mixins": [
+    "AnimalMixin",
+    "MobAccessor"
+  ],
+  "client": [
+    "EntityRenderMixin",
+    "MobRendererMixin",
+    "LivingEntityRendererAccessor",
+    "LivingEntityRendererMixin",
+    "LivingEntityRenderStateMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
+

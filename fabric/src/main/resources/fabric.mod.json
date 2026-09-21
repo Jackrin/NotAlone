@@ -31,7 +31,7 @@
         "fabric-api": "*",
         "minecraft": "~${minecraft_version}",
         "java": ">=${java_version}",
-        "commonnetworking": "26.2-1.1.0"
+        "commonnetworking": ">=26.2-1.1.0"
     }
 }
   

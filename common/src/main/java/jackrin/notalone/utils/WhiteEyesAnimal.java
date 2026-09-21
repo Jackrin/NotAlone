@@ -56,7 +56,7 @@ public class WhiteEyesAnimal {
             WhiteEyesAnimalClient.tick(animal);
         } else {
 
-            if (animal.getUUID() != animal_uuid)
+            if (!animal.getUUID().equals(animal_uuid))
                 return;
 
             ServerPlayer player = NotAloneUtils.markedPlayer;
@@ -84,6 +84,25 @@ public class WhiteEyesAnimal {
 
         WhiteEyesSyncPayload payload = new WhiteEyesSyncPayload(animal.getId(), false);
         Network.getNetworkHandler().sendToClient(payload, player);
+    }
+
+    public static void endPossession(ServerPlayer player) {
+        for (Map.Entry<Animal, SavedGoals> entry : originalGoalsMap.entrySet()) {
+            Animal animal = entry.getKey();
+
+            if (animal instanceof Mob) {
+                entry.getValue().restore((Mob) animal);
+            }
+
+            if (player != null) {
+                Network.getNetworkHandler().sendToClient(new WhiteEyesSyncPayload(animal.getId(), false), player);
+            }
+        }
+
+        originalGoalsMap.clear();
+        animal_uuid = null;
+        stareGoalSet = false;
+        endTime = 0L;
     }
 
     public static void overrideGoals(Animal animal) {

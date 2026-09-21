@@ -23,7 +23,7 @@ public class WhiteEyesAnimalClient {
     public static boolean stareGoalSet = false;
 
     public static void tick(Animal animal) {
-        if (animal.getUUID() != animal_uuid)
+        if (!animal.getUUID().equals(animal_uuid))
             return;
 
         if (!stareGoalSet) {

@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
+import jackrin.notalone.config.NotAloneConfig;
 import jackrin.notalone.entity.NotAloneEntity;
 import jackrin.notalone.init.ModEntities;
 import net.minecraft.core.BlockPos;
@@ -32,12 +33,8 @@ public class NotAloneUtils {
     public static final Map<UUID, Double> playerFovMap = new ConcurrentHashMap<>();
     public static final Map<UUID, Double> playerAspectRatioMap = new ConcurrentHashMap<>();
     private static final RandomSource RANDOM = RandomSource.create();
-    private static final int SPAWN_CHANCE = 2000;
-    private static final int FOOTSTEPS_CHANCE = 4000;
-    private static final int WHITE_EYES_CHANCE = 2000;
     public static ServerPlayer markedPlayer = null;
     private static long markEndTime = 0L;
-    private static final long MARK_DURATION_TICKS = 20L * 60 * 20;
 
     static Set<Block> ignoredBlocks = Set.of(
             Blocks.GLASS, Blocks.GLASS_PANE,
@@ -153,10 +150,8 @@ public class NotAloneUtils {
     }
 
     private static BlockPos findValidSpawnPosition(ServerLevel level, ServerPlayer targetPlayer, List<ServerPlayer> allPlayers) {
-        int MIN_DISTANCE = 48;
-        int MIN_DISTANCE_FOREST = 24;
-        int MAX_DISTANCE = 96;
-        int MAX_DISTANCE_FOREST = 96;
+        int minDistance = NotAloneConfig.herobrineMinDistance;
+        int maxDistance = NotAloneConfig.herobrineMaxDistance;
         final int ATTEMPTS = 100;
 
         BlockPos targetPos = targetPlayer.blockPosition();
@@ -165,10 +160,10 @@ public class NotAloneUtils {
         for (int i = 0; i < ATTEMPTS; i++) {
             double angle = RANDOM.nextDouble() * 2 * Math.PI;
             if (inForestBiome) {
-                MIN_DISTANCE = MIN_DISTANCE_FOREST;
-                MAX_DISTANCE = MAX_DISTANCE_FOREST;
+                minDistance = NotAloneConfig.herobrineMinDistanceForest;
+                maxDistance = NotAloneConfig.herobrineMaxDistanceForest;
             }
-            double distance = MIN_DISTANCE + RANDOM.nextDouble() * (MAX_DISTANCE - MIN_DISTANCE);
+            double distance = minDistance + RANDOM.nextDouble() * (maxDistance - minDistance);
             BlockPos spawnPos = targetPos.offset(
                     (int) (Math.cos(angle) * distance),
                     0,
@@ -215,6 +210,10 @@ public class NotAloneUtils {
     }
 
     public static void trySpawnEntity() {
+        if (!NotAloneConfig.herobrineEnabled || NotAloneConfig.herobrineRarity <= 0) {
+            return;
+        }
+
         if (markedPlayer == null) {
             return;
         }
@@ -225,17 +224,21 @@ public class NotAloneUtils {
             return;
         }
 
-        if (RANDOM.nextInt(SPAWN_CHANCE) == 0) {
+        if (RANDOM.nextInt(NotAloneConfig.herobrineRarity) == 0) {
             spawnEntity(level, markedPlayer);
         }
     }
 
     public static void tryPlayFootsteps() {
+        if (!NotAloneConfig.footstepsEnabled || NotAloneConfig.footstepsRarity <= 0) {
+            return;
+        }
+
         if (markedPlayer == null) {
             return;
         }
 
-        if (RANDOM.nextInt(FOOTSTEPS_CHANCE) == 0) {
+        if (RANDOM.nextInt(NotAloneConfig.footstepsRarity) == 0) {
             FootstepEffects.tryPlayFootsteps(markedPlayer);
         }
     }
@@ -249,7 +252,11 @@ public class NotAloneUtils {
             }
             return;
         }
-        if (RANDOM.nextInt(WHITE_EYES_CHANCE) == 0) {
+        if (!NotAloneConfig.possessionEnabled || NotAloneConfig.possessionRarity <= 0) {
+            return;
+        }
+
+        if (RANDOM.nextInt(NotAloneConfig.possessionRarity) == 0) {
             if (WhiteEyesAnimal.animal_uuid != null) return;
             WhiteEyesAnimal.triggerWhiteEyedAnimalEffect(markedPlayer);
         }
@@ -265,7 +272,7 @@ public class NotAloneUtils {
 
         ServerLevel overworld = server.overworld();
         markedPlayer = players.get(overworld.getRandom().nextInt(players.size()));
-        markEndTime = overworld.getGameTime() + MARK_DURATION_TICKS;
+        markEndTime = overworld.getGameTime() + NotAloneConfig.markedPlayerDurationTicks();
     }
 
     public static void checkMarkExpiration(MinecraftServer server) {

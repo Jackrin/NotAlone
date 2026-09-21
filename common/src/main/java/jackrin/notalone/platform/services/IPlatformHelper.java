@@ -1,5 +1,7 @@
 package jackrin.notalone.platform.services;
 
+import java.nio.file.Path;
+
 public interface IPlatformHelper {
 
     /**
@@ -23,6 +25,13 @@ public interface IPlatformHelper {
      * @return True if in a development environment, false otherwise.
      */
     boolean isDevelopmentEnvironment();
+
+    /**
+     * Gets the directory the loader keeps mod configuration files in.
+     *
+     * @return The config directory, normally the 'config' folder of the game instance.
+     */
+    Path getConfigDirectory();
 
     /**
      * Gets the name of the environment type as a string.

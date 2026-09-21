@@ -9,6 +9,34 @@ Features so far:
 - Animal possession (Herobrine can possess animals around you, they will get white eyes and stalk you, until looked at)
 - Footsteps (Footsteps can play at random times behind the player)
 
+## Configuration
+
+Every feature can be turned off on its own, and how often it happens can be tuned,
+in `config/notalone.toml`. The file is created with its default values the first
+time the mod runs, and each option is commented in place. Delete it to start over.
+
+```toml
+[herobrine]
+enabled = true
+rarity = 2000
+
+[footsteps]
+enabled = true
+rarity = 4000
+
+[animal_possession]
+enabled = true
+rarity = 2000
+```
+
+`rarity` is a one-in-N chance rolled once per server tick, and there are 20 ticks
+in a second, so a **higher** number means the event happens **less** often.
+
+Every feature runs on the server side. In singleplayer that is your own game, so
+the file in your instance folder is the one that matters. On a multiplayer server
+only the **server's** copy has any effect: changing it on a client does nothing,
+though the mod still has to be installed on both.
+
 ## Multiplayer
 
 The mod also works in multiplayer and needs to be installed on both the server and client.

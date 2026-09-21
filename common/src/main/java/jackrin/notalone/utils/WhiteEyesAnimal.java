@@ -1,6 +1,7 @@
 package jackrin.notalone.utils;
 
 import commonnetwork.api.Network;
+import jackrin.notalone.config.NotAloneConfig;
 import jackrin.notalone.mixin.MobAccessor;
 import jackrin.notalone.network.WhiteEyesSyncPayload;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +24,6 @@ public class WhiteEyesAnimal {
     public static UUID animal_uuid = null;
     public static boolean stareGoalSet = false;
     public static long endTime = 0L;
-    public static final long MARK_DURATION_TICKS = 20L * 60 * 3;
 
     public static final Map<Animal, SavedGoals> originalGoalsMap = new HashMap<>();
 
@@ -46,7 +46,7 @@ public class WhiteEyesAnimal {
         Animal chosen = animals.get(level.getRandom().nextInt(animals.size()));
         ServerLevel overworld = chosen.level().getServer().overworld();
         animal_uuid = chosen.getUUID();
-        endTime = overworld.getGameTime() + MARK_DURATION_TICKS;
+        endTime = overworld.getGameTime() + NotAloneConfig.possessionDurationTicks();
         WhiteEyesSyncPayload payload = new WhiteEyesSyncPayload(chosen.getId(), true);
         Network.getNetworkHandler().sendToClient(payload, player);
     }

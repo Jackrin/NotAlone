@@ -245,8 +245,7 @@ public class NotAloneUtils {
         ServerLevel overworld = server.overworld();
         if (markedPlayer == null || (overworld.getGameTime() >= WhiteEyesAnimal.endTime && WhiteEyesAnimal.animal_uuid != null)) {
             if (WhiteEyesAnimal.animal_uuid != null) {
-                WhiteEyesAnimal.animal_uuid = null;
-                WhiteEyesAnimal.stareGoalSet = false;
+                WhiteEyesAnimal.endPossession(markedPlayer);
             }
             return;
         }
@@ -279,16 +278,14 @@ public class NotAloneUtils {
         List<ServerPlayer> players = server.getPlayerList().getPlayers();
 
         if (markedPlayer == null) {
-            WhiteEyesAnimal.animal_uuid = null;
-            WhiteEyesAnimal.stareGoalSet = false;
+            WhiteEyesAnimal.endPossession(null);
             chooseNewMarkedPlayer(server);
             return;
         }
 
         if (overworld.getGameTime() >= markEndTime) {
+            WhiteEyesAnimal.endPossession(markedPlayer);
             markedPlayer = null;
-            WhiteEyesAnimal.animal_uuid = null;
-            WhiteEyesAnimal.stareGoalSet = false;
             chooseNewMarkedPlayer(server);
             return;
         }
@@ -297,6 +294,7 @@ public class NotAloneUtils {
         boolean isStillInGame = players.stream().anyMatch(player -> player.getUUID().equals(currentPlayer.getUUID()));
 
         if (!isStillInGame) {
+            WhiteEyesAnimal.endPossession(null);
             markedPlayer = null;
             chooseNewMarkedPlayer(server);
         }

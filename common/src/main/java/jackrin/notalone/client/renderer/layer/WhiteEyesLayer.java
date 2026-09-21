@@ -39,7 +39,7 @@ public class WhiteEyesLayer<T extends LivingEntity, M extends EntityModel<T>> ex
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity,
                        float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 
-        if (WhiteEyesAnimalClient.animal_uuid != entity.getUUID()) return;
+        if (!entity.getUUID().equals(WhiteEyesAnimalClient.animal_uuid)) return;
 
         Minecraft client = Minecraft.getInstance();
 

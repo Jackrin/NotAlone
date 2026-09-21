@@ -46,7 +46,7 @@ public class WhiteEyesLayer extends  RenderLayer<LivingEntityRenderState, Entity
                        float yRot,
                        float xRot) {
         if(state instanceof WhiteEyesRenderState abs) {
-            if (WhiteEyesAnimalClient.animal_uuid != ((WhiteEyesRenderState) state).getEntity().getUUID()) return;
+            if (!((WhiteEyesRenderState) state).getEntity().getUUID().equals(WhiteEyesAnimalClient.animal_uuid)) return;
             Minecraft client = Minecraft.getInstance();
             if (client.options.getCameraType() == CameraType.THIRD_PERSON_BACK ||
                     client.options.getCameraType() == CameraType.THIRD_PERSON_FRONT) {
